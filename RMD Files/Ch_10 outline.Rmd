@@ -1,0 +1,27 @@
+---
+title: "CH_10_Notes"
+author: "Dr. Luedeker"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+# Corrections about ANOVA
+
+# Chapter 10 Notes
+
+## Functions
+
+## ifelse
+
+## Chaining if, else if, else
+
+```{r}
+x <- 1:100
+
+
+```
+

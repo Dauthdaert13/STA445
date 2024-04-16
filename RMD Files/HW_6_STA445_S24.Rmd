@@ -1,0 +1,181 @@
+---
+title: "STA_445_Assignment_6"
+author: "Levi Mault"
+date: "Date"
+output: pdf_document
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lubridate)
+```
+
+
+## Problem 1
+Convert the following to date or date/time objects.
+
+a. September 13, 2010.
+
+```{r}
+my.date <- "September 13, 2010"
+(my.date <- mdy(my.date))
+class(my.date)
+```
+
+
+b. Sept 13, 2010.
+
+```{r}
+my.date <- "Sept 13, 2010"
+(my.date <- mdy(my.date))
+class(my.date)
+```
+
+
+c. Sep 13, 2010.
+
+```{r}
+my.date <- "Sep 13, 2010"
+(my.date <- mdy(my.date))
+class(my.date)
+```
+
+
+d. S 13, 2010. Comment on the month abbreviation needs.
+
+There need to be a standardized abbreviation when talking about months of the year. Sep. sorta works since we know we are talking about dates and Sep. is the only month of the year that begins with 'S'; however, should I have not know we were talking about dates, I would have probably assumed it was talking about part numbers or something.  Maybe with a year attached to the end for a unique car part or something.
+
+```{r}
+my.date <- "S 13, 2010"
+(my.date <- mdy(my.date))
+class(my.date)
+```
+
+
+e. 07-Dec-1941.
+
+```{r}
+my.date <- "07-Dec-1941"
+(my.date <- dmy(my.date))
+class(my.date)
+```
+
+
+f. 1-5-1998. Comment on why you might be wrong.
+
+There is no telling which number is the month or the day
+
+```{r}
+my.date <- "1-5-1998"
+(my.date <- mdy(my.date))
+class(my.date)
+```
+
+
+g. 21-5-1998. Comment on why you know you are correct.
+
+There are only 12 months, so 21 has to be the 21st day of the 5th month
+
+```{r}
+my.date <- "21-5-1998"
+(my.date <- dmy(my.date))
+class(my.date)
+```
+
+
+h. 2020-May-5 10:30 am
+
+```{r}
+my.date <- "2020-May-5 10:30 am"
+(my.date <- ymd_hm(my.date))
+class(my.date)
+```
+
+
+i. 2020-May-5 10:30 am PDT (ex Seattle)
+
+```{r}
+my.date <- "2020-May-5 10:30 am PDT (ex Seattle)"
+(my.date <- ymd_hm(my.date, tz = "US/Pacific"))
+class(my.date)
+```
+
+
+j. 2020-May-5 10:30 am AST (ex Puerto Rico)
+
+```{r}
+my.date <- "2020-May-5 10:30 am AST (ex Puerto Rico)"
+(my.date <- ymd_hm(my.date, tz = "America/Puerto_Rico"))
+class(my.date)
+```
+
+
+
+### Problem 2
+
+Using just your date of birth (ex Sep 7, 1998) and today's date calculate the following:
+
+a. Calculate the date of your 64th birthday.
+
+```{r}
+bday <- mdy_hm("08/04/1998 12:00 PM", tz="US/Pacific")
+bday + years(64)
+```
+
+
+b. Calculate your current age (in years). 
+
+```{r}
+(part2b <- year(as.period(bday %--% today())))
+```
+
+
+c. Using your result in part (b), calculate the date of your next birthday.
+
+```{r}
+(part2c <- bday + years(part2b + 1))
+```
+
+
+d. The number of _days_ until your next birthday.
+
+```{r}
+bday.when <- as.duration(now() %--% part2c)
+as.numeric(bday.when, "days")
+```
+
+
+e. The number of _months_ and _days_ until your next birthday.
+
+```{r}
+(bday.when <- as.duration(now() %--% part2c))
+```
+
+
+
+## Problem 3
+
+Suppose you have arranged for a phone call to be at 3 pm on May 8, 2015 at Arizona time. However, the recipient will be in Auckland, NZ. What time will it be there? 
+
+
+## Problem 4
+
+It turns out there is some interesting periodicity regarding the number of births on particular days of the year.
+
+a. Using the `mosaicData` package, load the data set `Births78` which records the number of children born on each day in the United States in 1978. Because this problem is intended to show how to calculate the information using the `date`, remove all the columns *except* `date` and `births`. 
+
+b. Graph the number of `births` vs the `date` with date on the x-axis. What stands out to you? Why do you think we have this trend?
+
+c. To test your assumption, we need to figure out the what day of the week each observation is. Use `dplyr::mutate` to add a new column named `dow` that is the day of the week (Monday, Tuesday, etc). This calculation will involve some function in the `lubridate` package and the `date` column.
+
+d. Plot the data with the point color being determined by the day of the week variable.
+
+
+
+
+
+
+
+
+
+

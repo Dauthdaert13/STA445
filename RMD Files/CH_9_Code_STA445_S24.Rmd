@@ -1,0 +1,25 @@
+---
+title: "CH 9 STA 445"
+author: "Bianca"
+date: "2024-02-29"
+output: pdf_document
+---
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readr)
+library(readxl)
+```
+
+Read in the Excel data.
+
+```{r}
+dive <- read_excel("DiveExam1.xlsx", sheet='Dive', range='A3:F280', na= c('0', '1.7'))
+```
+
+```{r}
+DiveExam1 <- read_csv("DiveExam1.csv", skip=2)[,1:6]
+```
+
+
+

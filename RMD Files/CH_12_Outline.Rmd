@@ -1,0 +1,130 @@
+---
+title: "CH_12_Demo_Code"
+author: "Dr. Luedeker"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+Chapter 12 requires us to use the package lubridate, so we must load that package along with tidyverse.  I think the name of the package is a joke.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lubridate)
+```
+
+## Part One: Date and Time objects
+
+Dates and time objects are a there own class of objects in R.   Dates and times are tricky when it come to computer science because of issues like daylight savings hours, leap years, etc.  A Y2K disaster was avoided because people were working around the clock to fix date/time problems,
+
+There are many ways to convert a character string to a DateTime object.
+
+
+```{r}
+my.date <- "Oct 31, 1975"
+my.date
+class(my.date)
+```
+
+Use a lubridate function to convert to a DateTime object.
+
+```{r}
+my.date.new <- mdy(my.date)
+my.date.new
+class(my.date.new)
+```
+Now with a time attached.
+
+Today's date and time
+```{r}
+today()
+now()
+```
+
+
+## Part Two: Extracting information from a DateTime object.
+
+Once you have a DateTime object, you can extract the year, month, day, etc.
+
+```{r}
+year(my.date.new)
+```
+Show wday, mday. yday, tz.  wday options: label, abbr.
+
+## Part Three: Time Zones
+
+You can get a list of all possible time zones by typing:
+
+```{r}
+OlsonNames()
+```
+
+UTC is the universal time code and what is used if no time zone is specified.  Arizona is its own time zone because we are cool and do not observe Daylight Savings.
+
+Let's create a time object for my former residence Dallas.
+
+```{r}
+(dallas <- mdy_hm("12-08-2023 06:35 pm", tz="US/Central"  ))
+```
+Change time zone to Arizona.
+```{r}
+with_tz(dallas, tzone="US/Arizona")
+```
+Note:  You can input many string of dates and times with the functions ymd etc., but only one time zone.  In this case, you need force_tzs to change the time zones of the other date time objects.
+
+
+## Part Three: Artihmetic on Dates
+
+We can add and subtract dates, but because of leap year and the fact that there are actually 365.25 days in a year and daylight savings time, arithmetic is not straight forward.
+
+Periods ignore things like leap year and daylight savings time, duration describe a year as the actual number of seconds in a year.
+
+If we were to add one year in duration we would be adding 
+```{r}
+paste(365.25*24*60*60, "seconds")
+```
+
+Here is an example of adding one year and one year in duration.
+
+```{r}
+(my.date <- mdy_hm("12/08/2023 5:00 pm", tz="US/Arizona"))
+```
+```{r}
+my.date + years(-25)
+```
+```{r}
+my.date + dyears(1)
+```
+Can we replicate this date by adding the number of seconds in a year?
+
+```{r}
+my.date + seconds()
+```
+
+Time distance between two dates:
+
+```{r}
+bday <- mdy_hm("09/25/1983 6:05 PM", tz="US/Arizona")
+```
+
+
+```{r}
+bday %--% now()
+```
+
+```{r}
+as.period(bday %--% now())
+as.duration(bday %--% now())
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
